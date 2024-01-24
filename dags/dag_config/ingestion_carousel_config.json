@@ -1,0 +1,55 @@
+{
+  "general_config": {
+                      "project_id": "raw-zone",
+                      "dataset_id": "ingestion_sources_mercadopago",
+                      "bucket_gcs": "gs://bucket_mercadopago"
+  },
+  "dag_kwargs": {
+                "dag_id"            : "ingestion-sources-carousel-mercadopago-cl"
+                ,"schedule_interval": "0 03 * * *"
+                ,"description"      : "Ingestion Sources Carousel Mercadopago CL"
+                ,"start_date"       : "2024-01-17"
+                ,"catchup"          : true
+                ,"max_active_runs"  : 1
+                ,"concurrency"      : 3
+                ,"tags": [
+                          "Ingestion"
+                          ,"Source"
+                          ,"carousel"
+                          ,"mercadopago"
+                          ,"cl"
+                          ]
+  },
+  "config_ingestion_tables": [
+                              {
+                                "task_name"         : "ingestion_pays_gcs_to_bq"
+                                ,"gcs_archive_name" : "pays"
+                                ,"file_type"        : "csv"
+                                ,"source_format_dag": "CSV"
+                                ,"bq_table_name"    : "pays"
+                                ,"partition_column"  : "pay_date"
+                              },
+
+                              {
+                                "task_name"         : "ingestion_prints_gcs_to_bq"
+                                ,"gcs_archive_name" : "prints"
+                                ,"file_type"        : "json"
+                                ,"source_format_dag": "NEWLINE_DELIMITED_JSON"
+                                ,"bq_table_name"    : "prints"
+                                ,"partition_column"  : "day"
+                              },
+
+                              {
+                                "task_name"         : "ingestion_taps_gcs_to_bq"
+                                ,"gcs_archive_name" : "taps"
+                                ,"file_type"        : "json"
+                                ,"source_format_dag": "NEWLINE_DELIMITED_JSON"
+                                ,"bq_table_name"    : "taps"
+                                ,"partition_column"  : "day"
+                              }  
+  ],
+  "config_gcs_to_bq_operator": {
+                                "bigquery_conn_id" : "google_cloud_bigquery_airflow_default",
+                                "gcs_conn_id" : "google_cloud_gcs_airflow_default"
+  }
+}

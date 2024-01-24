@@ -1,0 +1,31 @@
+{
+  "dag_kwargs": {
+                "dag_id"            : "product-carousel-mercadopago-cl"
+                ,"schedule_interval": "0 04 * * *"
+                ,"description"      : "Product Carousel Mercadopago CL"
+                ,"start_date"       : "2024-01-17"
+                ,"catchup"          : true
+                ,"max_active_runs"  : 1
+                ,"concurrency"      : 1
+                ,"tags": [
+                          "product"
+                          ,"carousel"
+                          ,"mercadopago"
+                          ,"cl"
+                          ]
+                },
+  "product_table_config": {
+                            "task_name"                 : "product_carousel_bq"
+                            ,"bq_table_name"            : "carousel_mercadopago"
+                            ,"dag_dependecy"            : "ingestion-sources-carousel-mercadopago-cl"
+                            ,"dag_timedelta_dependency" : 60
+                            ,"sql_parameters"           : {
+                                                            "pivot_date": "2020-12-01"
+                                                          }
+                          },
+  "data_config": {
+                  "project_id": "product-zone",
+                  "dataset_id": "mercadopago",
+                  "bq_conn_id": "google_cloud_bigquery_airflow_default"
+  }
+}
