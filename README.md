@@ -1,6 +1,6 @@
 # Proyecto exercise-meli
 Este repositorio contiene los pipelines necesarios para poder generar una tabla en Bigquery con data necesaria 
-para un modelo de Machine Learning
+para un modelo de Machine Learning, cuenta con los ambientes "dev", "uat" y "main".
 
 # Descripción de la arquitectura
 Para este caso de uso se utilizará un Bucket en Google Cloud Storage que contenga 3 fuentes de datos, estos archivos se ingestarán en tablas de Google Bigquery para posteriormente realizar una query sobre ellas y así poder generar una tabla final con los datos necesarios para un modelo de Machine Learning. Los pipelines serán construidos en código Python usando Apache Airflow y se utilizará GitHub como sistema de control de versiones git.
@@ -20,6 +20,8 @@ path_sql_airflow_default : ruta del repositorio donde se encuentra la carpeta sq
 google_cloud_bigquery_airflow_default : conector de Bigquery para poder insertar data en tablas de Bigquery
 google_cloud_gcs_airflow_default : conector de Cloud Storage para poder acceder a archivos dentro de un bucket
 
+# Carpetas a utilizar
+Las carpetas "dags" y "sql" son las utilizadas para montar los pipelines en los distintos ambientes.
 
 # Version de Python usada para el desarrollo:
 Python 3.12
